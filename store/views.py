@@ -5,6 +5,13 @@ from django.shortcuts import render, get_object_or_404
 from .forms import MovieForm
 from django.shortcuts import redirect
 
+
+# uma 'view' eh o lugar que coloco a logica da minha aplicação.
+# ela extrai infos do 'model' que eu criei e entrega elas a um 'template'
+
+
+# criando uma funçao chamada 'index', que leva a solicitacao e ira retornar o valor
+# que recebe ao chamar outra funcao 'render', que ira renderizar (montar) meu modelo (store/index.html)
 def index(request):
   movies = Movie.objects.filter(published_date__lte=timezone.now()).order_by('published_date')
   return render(request, 'store/index.html', {'movies': movies})
