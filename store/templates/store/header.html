@@ -1,0 +1,26 @@
+{% load static %}
+
+<header class="header">
+
+  <a href="#" class="logo">
+    <img src="{% static 'images/donnie.png' %}" alt="">
+  </a>
+
+  <nav class="navbar">
+    <a href="#home">home</a>
+    <a href="#about">about</a>
+    <a href="#menu">menu</a>
+    <a href="#contact">contact</a>
+  </nav>
+
+  <div class="icons">
+    <div class="fas fa-search" id="search-btn"></div>
+    <div class="fas fa-bars" id="menu-btn"></div> <!-- barra de pesquisa -->
+  </div>
+
+  <div class="search-form">
+    <input type="search" id="search-box" placeholder="search here...">
+    <label for="search-box" class="fas fa-search"></label>
+  </div>
+
+</header>
