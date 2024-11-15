@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Victor+Mono:wght@200&display=swap');
+
+:root{
+  --main-color: #d3ad7f;
+  --black: #13131a;
+  --bg: #010103;
+  --border: .1rem solid rgba(255, 255, 255, .3);
+}
+
+*{
+  font-family: 'Roboto', sans-serif;
+  margin: 0; padding: 0;
+  box-sizing: border-box;
+  outline: none; border: none;
+  text-decoration: none;
+  text-transform: capitalize;
+  transition: .2s linear;
+}
+
+.movie, .comment{
+  display: flex;
+  margin-top: 200px; 
+}
+
+.movie, .comment{
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.image img{
+  width: 30rem;
+  margin: 5rem;
+}
+
+.content{
+  padding: 2rem;
+}
+
+.content h2{
+  font-size: 7rem;
+  font-weight: bolder;
+  color: #13131a;
+  text-transform: uppercase;
+}
+
+.content p{
+  text-transform: none;
+  font-size: 1.6rem;
+  color:  #13131a;
+  padding: 1rem 0;
+}
+
+#synopsis{
+  font-size: 2rem;
+  font-weight: bolder;
+  color: #13131a;
+  text-transform: uppercase;
+}
+
+#date{
+  font-size: 1.2rem;
+}
+
+.author-input{
+  width: 100%;
+  padding: 10px;
+  border: 3px solid #13131a;
+  border-radius: 5px;
+  font-size: 16px;
+  color: blue;
+}
+
+.text-input{
+  width: 100%;
+  padding: 15px;
+  border: 3px solid #13131a;
+  border-radius: 5px;
+  font-size: 16px;
+  color: green;
+  height: 100px;
+}
+
+button {
+  background-color: aqua;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: pink;
+}
+
+
+
+

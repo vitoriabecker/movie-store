@@ -15,11 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
 
 # o DJANGO ira redirecionar tudo que entrar no site para 'store.urls'
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('store.urls')),
 ]
+
+
 
 

@@ -2,25 +2,30 @@
 
 <header class="header">
 
-  <a href="#" class="logo">
-    <img src="{% static 'images/donnie.png' %}" alt="">
-  </a>
+  <div class="logo">
+    <p href="#">film blog</p>
+  </div>
 
   <nav class="navbar">
-    <a href="#home">home</a>
-    <a href="#about">about</a>
-    <a href="#menu">menu</a>
-    <a href="#contact">contact</a>
+    <a href="{% url 'movie_list' %}">home</a>
+    <a href="{% url 'about' %}">about</a>
+    <a href="#movies">movies</a>
+    <a href="#contact">contact</a> <!-- como eh so uma questao de CSS, vou fazer depois de finalizar td -->
+    <a href="{% url 'movie_create' %}">create movie</a>
+
+    {% if request.user.is_authenticated %}
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'signup' %}">Signup</a>
+      <a href="{% url 'login' %}">Login</a>
+    {% endif %}
+
   </nav>
 
-  <div class="icons">
-    <div class="fas fa-search" id="search-btn"></div>
-    <div class="fas fa-bars" id="menu-btn"></div> <!-- barra de pesquisa -->
-  </div>
+  <form class="search-bar" action="">
+    <button type="submit"><i class="fa fa-search"></i></button>
+    <input type="text" placeholder="search here.." name="search">
 
-  <div class="search-form">
-    <input type="search" id="search-box" placeholder="search here...">
-    <label for="search-box" class="fas fa-search"></label>
-  </div>
+  </form>
 
 </header>

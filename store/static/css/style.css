@@ -17,7 +17,6 @@
   box-sizing: border-box;
   outline: none; border: none;
   text-decoration: none;
-  text-transform: capitalize;
   transition: .2s linear;
 }
 
@@ -37,12 +36,12 @@ html::-webkit-scrollbar-track{
 }
 
 html::-webkit-scrollbar-thumb{
-  background: #fff;
+  background: var(--bg);
   border-radius: 5rem;
 }
 
 body{
-  background: var(--bg);
+  background: #fff;
 }
 
 section{
@@ -50,412 +49,365 @@ section{
 }
 
 .heading{
-  text-align: center;
-  color: #fff;
-  text-transform: uppercase;
-  padding-bottom: 3.5rem;
-  font-size: 4rem;
+  text-align: initial; /*onde inicia o texto*/
+  color: var(--bg); /* cor do 'my collection */
+  font-weight: normal;
+  text-transform: lowercase;
+  font-size: 1.9rem;
+  border-bottom: .1rem solid #66796B;
+  padding-bottom: .5rem; /* distancia do texto ate a linha */
 }
 
-.heading span{
-  color: var(--main-color);
-  text-transform: uppercase;
-}
-
-/* edita botao de Checkout Now, coloca pro lado quando passa o mouse :O */
-.btn{
-  margin-top: 1rem;
-  display: inline-block;
-  padding: .9rem 3rem;
-  font-size: 1.7rem;
-  color: #fff;
-  background: var(--main-color);
-  cursor: pointer;
-}
-
-.btn:hover{
-  letter-spacing: .2rem;
-}
 
 .header{
-  background: var(--bg);
+  background: #fff;
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 1.5rem 7%;
-  border-bottom: var(--border);
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 1000;
+  padding: 3rem;
+  border-bottom: 1px solid #66796B;
+  justify-content: space-around;
 }
 
-.header .logo img{
-  height: 6rem;
+.logo{
+  color: #66796B;
+  font-size: 4.5rem;
+  font-weight: 950;
+  text-transform: lowercase;
+  line-height: 45px;
+  justify-content: left;
 }
 
-.header .navbar a{
+.navbar a{
   margin: 0 1rem;
-  font-size: 1.6rem;
-  color: #fff;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color:#66796B;;
 }
 
-.header .navbar a:hover{
-  color: var(--main-color);
-  border-bottom: .1rem solid var(--main-color);
+/* hover da barra de pesquisa (home, about, movies) */
+.navbar a:hover{
+  color: var(--bg);
+  border-bottom: .1rem solid var(--bg);
   padding-bottom: .5rem;
 }
 
-.header .icons div{
+.search-bar input[type=text] {
+  padding: 10px;
+  font-size: 17px;
+  border: 1px solid #66796B;
+  border-radius: 10px;
+  border-left: none;
+  float: left;
+  width: 350px;
+  background: #fff;
+}
+
+::placeholder{
+  font-size: 14px;
+  opacity: 0.5;
+}
+
+/* Style the submit button */
+.search-bar button {
+  float: left;
+  padding: 10px;
+  width: 50px;
+  background: #fff;
+  color: #66796B;
+  font-size: 17px;
+  border: 1px solid #66796B;
+  border-radius: 10px;
+  border-right: none;
+  cursor: pointer;
+}
+
+.search-bar button:hover {
+  background: #66796B;
   color: #fff;
-  cursor: pointer;
-  font-size: 2.5rem;
-  margin-left: 2rem;
 }
 
-.header .icons div:hover{
-  color: var(--main-color);
+/* Clear floats */
+.search-bar::after {
+  content: "";
+  clear: both;
+  display: table;
 }
 
-#menu-btn{
-  display: none;
-}
 
-/* da cor, tamanho, etc para a caixa de pesquisa */
-.header .search-form{
-  position: absolute;
-  top: 115%; right: 7%;
-  background: #fff;
-  width: 50rem;
-  height: 5rem;
-  display: flex;
-  align-items: center;
-  transform: scaleY(0);
-  transform-origin: top;
-}
-
-.header .search-form.active{
-  transform: scaleY(1);
-}
-
-/* da tamanho, cor, etc para o que esta dentro da caixa de pesquisa */
-.header .search-form input{
-  height: 100%;
-  width: 100%;
-  font-size: 1.6rem;
-  color: var(--black);
-  padding: 1rem;
-  text-transform: none;
-}
-
-/* edita a lupa */
-.header .search-form label{
-  cursor: pointer;
-  font-size: 2.2rem;
-  margin-right: 1.5rem;
-  color: var(--black);
-}
-
-/* ao passar o mouse pela lupa, ela fica da cor main */
-.header .search-form label:hover{
-  color: var(--main-color);
-}
-
-/* mexe nas imagens, preços, preciso ver depois direitinho*/
-.header .cart-items-container{
-  position: absolute;
-  top: 100%; right: -100%; 
-  height: calc(100vh - 9.5rem);
-  width: 35rem;
-  background: #fff;
-  padding: 0 1.5rem;
-}
-
-.header .cart-items-container.active{
-  right: 0;
-}
-
-/* ajeita o X, os preços e o local das imagens */
-.header .cart-items-container .cart-item{
-  position: relative;
-  margin: 2rem 0;
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-}
-
-/* arruma o X, quando passa o mouse se transforma na maosinha */
-.header .cart-items-container .cart-item .fa-times{
-  position: absolute;
-  top: 1rem; right: 1rem;
-  font-size: 2rem;
-  cursor: pointer;
-  color: var(--black);
-}
-
-/* coloca cor ao passar o mouse pelo X */
-.header .cart-items-container .cart-item .fa-times:hover{
-  color: var(--main-color);
-}
-
-/* alterando o tamanho das imagens de produtos */
-.header .cart-items-container .cart-item img{
-  height: 7rem;
-}
-
-/* alterando texto de h3 */
-.header .cart-items-container .cart-item .content h3{
-  font-size: 2rem;
-  color: var(--black);
-  padding-bottom: .5rem;
-}
-
-/* editando price */
-.header .cart-items-container .cart-item .content .price{
-  font-size: 1.5rem;
-  color: var(--main-color);
-}
-
-/*alinhando check out no meio*/
-.header .cart-items-container .btn{
-  width: 100%;
-  text-align: center;
-}
-
-/* inserindo imagem */
 .home{
-  min-height: 100vh;
   display: flex;
   align-items: center;
-  background: url(../images/wdonnie.jpg) no-repeat;
   background-size: cover;
   background-position: center;
 }
 
 .home .content{
-  max-width: 60rem;
+  max-width: 60rem; /* limita o espaço do texto */
 }
 
 /* editando h3 */
 .home .content h3{
   font-size: 6rem;
-  text-transform: uppercase;
-  color: #fff;
+  text-transform: lowercase;
+  color: var(--bg);
+  padding-top: 10rem;
 }
 
 .home .content p{
-  font-size: 2rem;
-  font-weight: lighter;
+  font-size: 2.3rem;
+  font-weight: normal;
+  text-transform: lowercase;
+  text-align: justify;
   line-height: 1.8;
   padding: 1rem 0;
-  color: #eee;
+  color: var(--bg);
 }
 
-.about .row{
-  display: flex;
-  align-items: center;
-  background: var(--black);
-  flex-wrap: wrap;
+
+
+.about{
+  padding: 0rem 0%;
+  margin-bottom: 14rem;
 }
 
-.about .row .image{
-  flex:1 1 45rem;
+.about .box-container-cd{
+  background: url(../images/cidade_bg.webp) no-repeat left; /* define a img como background */
+  background-size: 55%; /* porcentagem do background */
+  background-color: #fff;
+  overflow: hidden;
+  padding: 100px 0;
 }
 
-.about .row .image img{
- width: 100%;
+.about .box-container-cb{
+  background: url(../images/central-do-brasil.webp) no-repeat right;
+  background-size: 55%; /* porcentagem do background */
+  background-color: #fff;
+  overflow: hidden;
+  padding: 100px 0;
+  margin-top: 30px;
 }
 
-.about .row .content{
-  flex:1 1 45rem;
-  padding: 2rem;
-}
-
-.about .row .content h3{
-  font-size: 3rem;
+.about h1{
+  margin-bottom: 30px; /* distancia do titulo para o texto */
   color: #fff;
+  font-size: 50px;
+  font-weight: bolder;
+  font-weight: 900;
 }
 
-.about .row .content p{
-  font-size: 1.6rem;
-  color: #ccc;
-  padding: 1rem 0;
-  line-height: 1.8;
+.about .text{
+  font-size: 16px;
+  color: #fff;
+  text-transform: none;
+  line-height: 30px; /* espaçamento entre as linhas */
+  text-align: justify;
+  margin-right: 15rem;
+  margin-bottom: 20px;
 }
 
-.menu .box-container{
+.about a{
+  font-size: 15px;
+  color: #010103;
+  text-transform: none;
+  font-weight: bold;
+}
+
+.about .box-container-cd .cidade-deus{
+  width: 55%;
+  float: right; /* texto fica a direita */
+  background-color: #66796B;
+  padding: 100px; /* tamanho do box container */
+}
+
+.about .box-container-cb .central-brasil{
+  width: 55%;
+  float: left;
+  background-color: #66796B;
+  padding: 100px;
+}
+
+
+
+
+.movies{
+  padding-bottom: 15rem;
+}
+
+.movies .box-container{
   display: grid; /* grade */
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-  gap:1.5rem; /* tamanho da brecha entre as imagens*/
+  grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+  gap:2rem; /* tamanho da brecha entre as imagens*/
 }
 
-.menu .box-container .box{
-  padding:5rem; /* preenchimento, tamanho do retangulo */
+.movies .box-container .box{
+  padding-top: 3.8rem; /* espaço entre filmes e linha do 'my collection' */
   text-align: center;
-  border: var(--border); /* da cor a borda */
+}
+
+.movies .box-container .box .image{
+  padding: 3rem .1;
 }
 
 /* define o tamanho da imagem */
-.menu .box-container .box img{
-  height: 10rem; 
+.movies .box-container .box .image img{
+  height: 28rem;
 }
 
-.menu .box-container .box h3{
-  color: #fff;
-  font-size: 2rem;
-  padding: 1rem 0;
+.movies .box-container .box .content{
+  font-size: 1.4rem;
+  margin: .2rem; /* margem do que? ao redor do texto? */
+  padding: 0.5rem;
 }
 
-.menu .box-container .box .price{
-  color: #fff;
-  font-size: 2.5rem;
-  padding: .5rem 0;
+.movies .box-container .box .content a{
+  color: var(--bg);
 }
 
-.menu .box-container .box .price span{
-  font-size: 1.5rem;
-  text-decoration: line-through;
-  font-weight: lighter;
+.movies .box-container .box .content .director{
+  font-size: 1.3rem;
+  color: var(--bg);
+  font-weight: normal;
+  padding: 0.5rem;
 }
 
-/* define cor do fundo */
-.menu .box-container .box:hover{
-  background: #fff;
+/* define cor do fundo 
+.movies .box-container .box:hover{
+  background:#b4b5b5;
+}*/
+
+
+
+
+
+/* TESTES DE HOVER EFFECTS */
+/* General styles */
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
+
+.box {
+  position: relative;
+  width: 200px; /* Adjust the size as needed */
+  padding: 10px;
+}
+
+.image {
+  position: relative;
+  overflow: hidden;
+}
+
+.image img {
+  width: 100%;
+  height: auto;
+  transition: transform 0.3s ease;
+}
+
+.image:hover img {
+  transform: scale(1.05); /* Slight zoom on hover */
+}
+
+/* Hover effect borders */
+.image .border {
+  position: absolute;
+  color: #66796B;
+  left: 0;
+  background: currentColor;
+  transition: transform var(--transition-duration) ease-in-out;
+}
+
+.image .border-top,
+.image .border-bottom {
+  width: 100%;
+  height: 1px;
+  transform: scaleX(0);
+}
+
+.image .border-left,
+.image .border-right {
+  width: 1px;
+  height: 100%;
+  transform: scaleY(0);
+}
+
+.image .border-top,
+.image .border-left,
+.image .border-right {
+  top: 0;
+}
+
+.image .border-bottom {
+  bottom: 0;
+  transform-origin: bottom right;
+}
+
+.image .border-top {
+  transform-origin: top left;
+}
+
+.image .border-left {
+  transform-origin: bottom left;
+}
+
+.image .border-right {
+  left: auto;
+  right: 0;
+  transform-origin: top right;
+}
+
+/* Hover effect triggers */
+.image a:hover .border-top,
+.image a:hover .border-bottom {
+  transform: scaleX(1);
+}
+
+.image a:hover .border-left,
+.image a:hover .border-right {
+  transform: scaleY(1);
+}
+
+.image a:hover .border-right {
+  transition-delay: var(--transition-delay);
+}
+
+.image a:hover .border-bottom {
+  transition-delay: calc(var(--transition-delay) * 2);
+}
+
+.image a:hover .border-left {
+  transition-delay: calc(var(--transition-delay) * 3);
+}
+
+/* Diagonal animation */
+.image[data-animation="diagonal"] .border-left {
+  transform-origin: top left;
+}
+
+.image[data-animation="diagonal"] .border-right,
+.image[data-animation="diagonal"] .border-bottom {
+  transform-origin: bottom right;
+}
+
+.image[data-animation="diagonal"] a:hover [class^=border] {
+  transition-delay: 0s;
+}
+
+
+
+
+
 
 /* o fundo fica branco e todo resto preto */
-.menu .box-container .box:hover > *{
-  color: var(--black);
-}
-
-.products .box-container{
-  display: grid; /* grade */
-  grid-template-columns: repeat(auto-fit, minmax(30rem, 1fr));
-  gap:1.5rem; /* tamanho da brecha entre as imagens*/
-}
-
-.products .box-container .box{
-  text-align: center;
-  border: var(--border);
-  padding: 2rem;
-}
-
-/* edita os icones, tamanho, cor, borda, ... */
-.products .box-container .box .icons a{
-  height: 5rem;
-  width: 5rem;
-  line-height: 5rem;
-  font-size: 2rem;
-  border: var(--border);
+.movies .box-container .box:hover > *{
   color: #fff;
-  margin: .3rem;
-}
-
-/* define a cor de quando passa o mouse pelos icones */
-.products .box-container .box .icons a:hover{
-  background: var(--main-color);
-}
-
-/* ajusta a imagem ao retangulo */
-.products .box-container .box .image{
-  padding: 2.5rem 0;
-}
-
-/* ajusta o tamanho da imagem */
-.products .box-container .box .image img{
-  height: 25rem;
-}
-
-/* edita a frase "fresh coffee" */
-.products .box-container .box .content h3{
-  color: #fff;
-  font-size: 2.5rem;
-}
-
-/* corrige o espaço abaixo do produto */
-.products .box-container .box .content .stars{
-  padding: 1.5rem;
-}
-
-/* ESTRELAS DE AVALIACAO */
-.products .box-container .box .content .stars i{
-  font-size: 1.7rem;
-  color: var(--main-color);
-}
-
-/* edita texto dos precos */
-.products .box-container .box .content .price{
-  color: #fff;
-  font-size: 2.5rem;
-}
-
-.products .box-container .box .content .price span{
-  text-decoration: line-through;
-  font-weight: lighter;
-  font-size: 1.5rem;
-}
-
-
-
-
-.contact .row{
-  display: flex;
-  background: var(--black);
-  flex-wrap: wrap;
-  gap: 1rem;
-}
-
-/* expande a area do mapa */
-.contact .row .map{
-  flex: 1 1 45rem;
-  width: 100%;
-  object-fit: cover;
-}
-
-/* ajusta o form */
-.contact .row form{
-  flex: 1 1 45rem;
-  padding: 5rem 2rem;
-  text-align: center;
-}
-
-.contact .row form h3{
-  text-transform: uppercase;
-  font-size: 3.5rem;
-  color: #fff;
-}
-
-/* editando campos de texto */
-.contact .row form .inputBox{
-  display: flex;
-  align-items: center;
-  margin-top: 2rem;
-  margin-bottom: 2rem;
-  background: var(--bg);
-  border: var(--border);
-}
-
-/* edita pictogramas */
-.contact .row form .inputBox span{
-  color: #fff;
-  font-size: 2rem;
-  padding-left: 2rem;
-}
-
-/* edita fundo do campo de texto */
-.contact .row form .inputBox input{
-  width: 100%;
-  padding: 2rem;
-  font-size: 1.7rem;
-  color: #fff;
-  text-transform: none;
-  background: none;
 }
 
 
 
 
 .footer{
-  background: var(--black);
+  background: var(--bg);
   text-align: center;
 }
 
@@ -464,48 +416,31 @@ section{
 }
 
 .footer .share a{
-  height: 5rem;
-  width: 5rem;
-  line-height: 5rem;
+  height: 4rem; 
+  width: 4rem;
+  line-height: 4rem;
   font-size: 2rem;
   color: #fff;
-  border: var(--border);
   margin: .3rem;
   border-radius: 50%;
 }
 
 .footer .share a:hover{
-  background-color: var(--main-color);
-}
-
-.footer .links{
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  padding: 2rem 0;
-  gap: 1rem;
-}
-
-.footer .links a{
-  padding: .7rem 2rem;
-  color: #fff;
-  border: var(--border);
-  font-size: 2rem;
-}
-
-.footer .links a:hover{
-  background: var(--main-color);
+  background-color: #66796B;
 }
 
 .footer .credit{
   font-size: 2rem;
   color: #fff;
+  text-transform: lowercase;
   font-weight: lighter;
   padding: 1.5rem;
 }
 
 .footer .credit span{
-  color: var(--main-color);
+  color: #66796B;
+  font-weight: bold;
+  text-transform: lowercase;
 }
 
 

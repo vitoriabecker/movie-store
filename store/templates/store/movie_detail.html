@@ -1,32 +1,112 @@
-<html>
- 
 {% load static %}
+<!DOCTYPE html>
 
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>movies very cool</title>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>movies very cool</title>
 
-  <!-- font awesome cdn link -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  
-  <!-- custom css file link -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-
+      <!-- font awesome cdn link -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+      
+      <!-- custom css file link -->
+      <link rel="stylesheet" href="{% static 'css/movie_detail.css' %}">
+      <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
-  <body>
+
+<body>
 
   {% include 'store/header.html' %}
-
   
-  <div class="movie" style="margin-top: 200px;">
-    {% if movie.published_date %} <!-- verificando se published_date de um filme nao esta vazia -->
-    <div class="date">
-      {{ movie.published_date }}
+  <div class="movie">
+
+    <div class="image">
+      <img src="{{ movie.poster.url }}" alt="{{ movie.title }}">
     </div>
-    {% endif %}
-    <h2>{{ movie.title }}</h2>
-    <p>{{ movie.synopsis |linebreaksbr }}</p>
+
+    <div class="content">
+      <h2>{{ movie.title }}</h2>
+      <p id="synopsis">Synopsis</p>
+      <p>{{ movie.synopsis |linebreaksbr }}</p>
+      <p>Directed by {{movie.director}}</p>
+      
+      {% if movie.published_date %} <!-- verificando se published_date de um filme nao esta vazia -->
+      <p id="date">{{ movie.created_date }}</p>
+      {% endif %}
+    </div>
+
   </div>
-  </body>
+  
+
+  {% if request.user.is_authenticated %}
+    <div class="comment">
+      <div class="row">
+        <div>
+          <div class="comment-body">
+              <h2>{{ comments.count }} comments</h2>
+              {% for comment in comments %}
+              <div class="comments">
+                <p> 
+                {{ comment.user }}
+                  <span>{{ comment.create_date }}</span>
+                </p>
+                {{ comment.text | linebreaks }}
+              </div>
+              {% endfor %}
+          </div>
+        </div>
+
+        <div>
+          <div class="comment-box">
+            {% if new_comment %}
+            <div>
+              Your comment is awaiting moderation
+            </div>
+            {% else %}
+            <h3>Leave a comment</h3>
+            <form method="post">
+              {% csrf_token %}
+              {{ comment_form.as_p }}
+              <button type="submit">Submit</button>
+            </form>
+            {% endif %}
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div>
+      <div class="rating-box">
+      <h3>Leave a rating</h3>
+        <form action="{% url 'rate_movie' movie.pk %}" method="post">
+          {% csrf_token %}
+          {{ rate_form.as_p }}
+          <button type="submit">Submit</button>
+        </form>
+      </div>
+    </div>
+  {% else %}
+
+    <a href="{% url 'login' %}">Want to rate and comment? Login</a>
+  {% endif %}
+
+
+
+  <div class="edit-movie">
+    {% if perms.store.change_movie %}
+      <a href="{% url 'movie_update' movie.pk %}">Edit</a>
+    {% endif %}
+  </div>
+
+
+
+  <div class="delete-movie">
+    {% if perms.store.delete_movie %}
+      <a href="{% url 'movie_delete_confirm' movie.pk %}">Delete</a>
+    {% endif %}
+  </div>
+
+</body>
 </html>
