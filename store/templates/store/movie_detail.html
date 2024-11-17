@@ -59,18 +59,12 @@
 
         <div>
           <div class="comment-box">
-            {% if new_comment %}
-            <div>
-              Your comment is awaiting moderation
-            </div>
-            {% else %}
             <h3>Leave a comment</h3>
-            <form method="post">
+            <form method="post" action="{% url 'add_comment_to_movie' movie.pk %}">
               {% csrf_token %}
               {{ comment_form.as_p }}
               <button type="submit">Submit</button>
             </form>
-            {% endif %}
           </div>
         </div>
 
@@ -104,7 +98,7 @@
 
   <div class="delete-movie">
     {% if perms.store.delete_movie %}
-      <a href="{% url 'movie_delete_confirm' movie.pk %}">Delete</a>
+      <a href="{% url 'movie_delete' movie.pk %}">Delete</a>
     {% endif %}
   </div>
 

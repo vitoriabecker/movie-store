@@ -13,12 +13,8 @@ from django.contrib.auth.models import Group
 # ela extrai infos do 'model' que eu criei e entrega elas a um 'template'
 
 def home(request):
-  movies = Movie.objects.all()
-  return render(request, 'store/base.html', {'movies':movies})
+  return render(request, 'store/home.html')
 
-
-def about(request):
-  return render(request, 'store/about.html')
 
 
 def user_signup(request):
@@ -35,7 +31,7 @@ def user_signup(request):
         group = None
         
       user.groups.add(group)
-      return redirect('movie_list')
+      return redirect('home')
   else:
     form = SignUpForm()
   return render(request, 'registration/signup.html', {'form':form})
@@ -54,43 +50,38 @@ def user_login(request):
         if user is not None:
           login(request, user)
           messages.success(request, 'Logged in successfully!')
-          return redirect('movie_list')
-    else: 
+          return redirect('home')
+    else:
       form = LoginForm()
     return render(request, 'registration/login.html', {'form':form})
   else:
-    return redirect('movie_list')
+    return redirect('home')
   
 
 def user_logout(request):
   logout(request)
-  return redirect('movie_list')  
+  return redirect('home')  
 
+
+def movie_list(request):
+  template_name = 'movie_list.html'
+  movies = Movie.objects.all()
+  return render(request, template_name, {"movies":movies})
 
 def movie_detail(request, pk):
   template_name = 'movie_detail.html'
   movie = get_object_or_404(Movie, pk=pk)
-  comments = movie.comments.filter(active=True)
-  new_comment = None
+  comments = movie.comments.all()
 
-  if request.method == 'POST':
-    comment_form = CommentForm(data=request.POST)
-
-    if comment_form.is_valid():
-      new_comment = comment_form.save(commit=False)
-      new_comment.movie = movie
-      new_comment.save()
-  else:
-    comment_form = CommentForm()
+  comment_form = CommentForm()
   return render(request, template_name, {'movie':movie, 
                                          'comments': comments,
-                                         'new_comment': new_comment,
                                          'comment_form': comment_form,
                                          'rate_form': RatingForm(),})
 
 
 @permission_required('store.add_movie', raise_exception=True)
-def add_movie(request):
+def create_movie(request):
   template_name = 'add_movie.html'
 
   if request.user.is_authenticated:
@@ -116,26 +107,27 @@ def add_movie(request):
 
 @permission_required('store.change_movie', raise_exception=True)
 def update_movie(request, pk):
-
   movie = get_object_or_404(Movie, pk=pk)
 
-  if request.user.is_authenticated and request.user.is_superuser:
-    if request.method == 'POST':
-      movie = Movie.objects.get(pk=pk)
-      form = MovieForm(request.POST, instance=movie)
-
-      if form.is_valid():
-        form.save()
-        return redirect('movie_list')
-    else:
-      form = MovieForm(instance=movie)
-    return render(request, 'store/update_movie.html', {'form':form})
-  else:
+  if not request.user.is_authenticated or not request.user.is_superuser:
     return redirect('login')
+  
+  if request.method == 'POST':
+    movie = Movie.objects.get(pk=pk)
+    form = MovieForm(request.POST, request.FILES, instance=movie)
+
+    if form.is_valid():
+      form.save()
+      return redirect('movie_list')
+  else:
+    form = MovieForm(instance=movie)
+  return render(request, 'store/update_movie.html', {'form':form})
+
+    
 
 
 @permission_required('store.delete_movie', raise_exception=True)
-def delete_movie_confirm(request, pk):
+def delete_movie(request, pk):
   movie = get_object_or_404(Movie, pk=pk)
 
   if request.method == 'POST':
@@ -143,49 +135,39 @@ def delete_movie_confirm(request, pk):
       movie.delete()
 
       return redirect('movie_list')
-  return render(request, 'store/movie_confirm_delete.html', {'movie':movie})
+  return render(request, 'store/movie_delete.html', {'movie':movie})
 
 
-def movie_publish(request, pk):
-  movie = get_object_or_404(Movie, pk=pk)
-  movie.publish()
-  return redirect('movie_detail', pk=pk)
 
 
 def add_comment_to_movie(request, pk):
   movie = get_object_or_404(Movie, pk=pk)
-  pass
+  comment_form = CommentForm(data=request.POST)
+  
+  if comment_form.is_valid():
+    new_comment = comment_form.save(commit=False)
+    new_comment.movie = movie
+    new_comment.save()
+    return redirect('movie_detail', pk=pk)
   
 
-def comment_approve(request, pk):
-  comment = get_object_or_404(Comment, pk=pk)
-  comment.approve()
-  return redirect('movie_detail', pk=comment.movie.pk)
-
-
-def comment_remove(request, pk):
-  comment = get_object_or_404(Comment, pk=pk)
-  movie_pk = comment.movie.pk
-  comment.delete()
-  return redirect('movie_detail', pk=movie_pk)
+  
   
 
 def rate_movie(request, pk):
-  print('a')
-  if request.user.is_authenticated:
-    if request.method == 'POST':
-      rate_form = RatingForm(request.POST)
+  if not request.user.is_authenticated:
+    return redirect('movie_list')  
+  
+  if request.method == 'POST':
+    rate_form = RatingForm(request.POST)
 
-      if rate_form.is_valid():
-        rate = rate_form.cleaned_data['rate']
-        movie = get_object_or_404(Movie, pk=pk)
-        rating = Rating(movie=movie, user=request.user, rate=rate)
+    if rate_form.is_valid():
+      rate = rate_form.cleaned_data['rate']
+      movie = get_object_or_404(Movie, pk=pk)
+      rating = Rating(movie=movie, user=request.user, rate=rate)
 
-        print(rating)
+      rating.save()
 
-        rating.save()
-
-        return redirect('movie_detail', pk=pk)
-  return redirect('movie_list')    
+      return redirect('movie_detail', pk=pk)
 
   

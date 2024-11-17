@@ -7,10 +7,8 @@
   </div>
 
   <nav class="navbar">
-    <a href="{% url 'movie_list' %}">home</a>
-    <a href="{% url 'about' %}">about</a>
-    <a href="#movies">movies</a>
-    <a href="#contact">contact</a> <!-- como eh so uma questao de CSS, vou fazer depois de finalizar td -->
+    <a href="{% url 'home' %}">home</a>
+    <a href="{% url 'movie_list' %}">movies</a>
     <a href="{% url 'movie_create' %}">create movie</a>
 
     {% if request.user.is_authenticated %}

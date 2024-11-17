@@ -36,7 +36,6 @@ class MovieForm(forms.ModelForm):
   class Meta:
     model = Movie 
     fields = ('user', 'director', 'title', 'poster', 'synopsis', 'year')
-    #label = {'author':'Author', 'director':'Director', 'title':'Title', 'synopsis':'Synopsis', 'year':'Year'}
   
 
 class CommentForm(forms.ModelForm):

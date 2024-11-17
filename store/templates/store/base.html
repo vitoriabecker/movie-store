@@ -19,9 +19,7 @@
 
 {% include 'store/header.html' %}
 
-<!-- ANTES de fazer o CSS preciso alterar os nomes e padronizar, ta tudo muito bagunçado e feio
- 
-     -qnd eu EDITO um filme e marco "clear" na imagem, ta dando erro -->
+<!-- ANTES de fazer o CSS preciso alterar os nomes e padronizar, ta tudo muito bagunçado e feio -->
 
 
 <!-- DASHBOARD starts -->
@@ -37,139 +35,9 @@
 {% endif %}
 
 
-<div>
-  <h4>User Profile</h4>
-  <h5>Name: {{ full_name }}</h5>
-  {% for group in groups %}
-    <p>Group: {{ group.name }}</p>
-  {% endfor %}
-</div>
+{% block content %}
+{% endblock content %}
 
-
-<div>
-  <h3>Dashboard page</h3>
-
-  {% if perms.store.change_movie %}
-    <a href="{% url 'movie_create' %}">Add movie</a>
-    {% block content %}
-    {% endblock content %}
-  {% endif %}
-
-  <h4>Show movie Information</h4>
-  {% if movies %}
-    <table>
-
-      <thead>
-        <tr class="text-center">
-          <th scope="col" style="width:2%">Pk</th>
-          <th scope="col" style="width:28%">Title</th>
-          <th scope="col" style="width:55%">Synopsis</th>
-        <tr>
-        </thead>
-
-        <tbody>
-          {% for movie in movies %}
-          <tr>
-            <th scope="row">{{ movie.pk }}</th>
-            <td>{{ movie.title }}</td>
-            <td>{{ movie.synopsis }}</td>
-            <td class="text-center">
-            </td>
-          <tr>
-          {% endfor %}
-        </tbody>
-
-    </table>
-  {% else %}
-    <h4>No Records</h4>
-  {% endif %}
-</div>
-<!-- DASHBOARD end -->
-
-
-
-<!-- home section starts -->
-<section class="home" id="home">
-
-  <div class="content">
-    <h3>hi everyone</h3>
-    <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Eius cumque architecto optio reprehenderit, in, 
-      tempore itaque error vitae eveniet maxime ad dolore deleniti aliquid! Velit vel animi cum dolor fugiat?</p>
-  </div>
-
-</section>
-<!-- home section ends -->
-
-
-<!-- about section starts -->
-<section class="about" id="about">
-
-  <div class="box-container-cd">
-
-    <div class="cidade-deus">
-      <h1>Cidade de Deus</h1>
-      <p class="text">Buscapé é um jovem pobre, negro e sensível, que cresce em um universo de muita violência. Ele vive na Cidade de Deus, favela carioca 
-        conhecida por ser um dos locais mais violentos do Rio. Amedrontado com a possibilidade de se tornar um bandido, Buscapé é salvo de seu destino por 
-        causa de seu talento como fotógrafo, o qual permite que siga carreira na profissão. É por meio de seu olhar atrás da câmera que ele analisa o dia a 
-        dia da favela em que vive, onde a violência aparenta ser infinita.</p>
-    </div>
-
-  </div>  
-  
-  <div class="box-container-cb">
-
-    <div class="central-brasil">
-      <h1>Central do Brasil</h1>
-      <p class="text">Dora, uma amargurada ex-professora, ganha a vida escrevendo cartas para pessoas analfabetas, que ditam o que querem contar às suas 
-        famílias. Ela embolsa o dinheiro sem sequer postar as cartas. Um dia, Josué, o filho de nove anos de idade de uma de suas clientes, acaba sozinho 
-        quando a mãe é morta em um acidente de ônibus. Ela reluta em cuidar do menino, mas se junta a ele em uma viagem pelo interior do Nordeste em busca 
-        do pai de Josué, que ele nunca conheceu.</p>
-    </div>
-
-  </div>  
-
-</section>
-<!-- about section ends -->
-
-
-
-
-<!-- MOVIE section starts -->
-<section class="movies" id="movies">
-
-  <h1 class="heading"> my collection </h1>
-
-  <div class="box-container">
-
-    {% for movie in movies %}
-    <div class="box">
-        
-      <div class="image">
-        <a href="{% url 'movie_detail' pk=movie.pk %}">
-
-        {% if movie.poster %}
-          <img src="{{ movie.poster.url }}" alt="{{ movie.title }}"> 
-        {% else %}
-          <img src="{% static 'images/americanpsycho.png' %}" alt="default poster">
-        {% endif %}
-        <span class="border border-top"></span>
-        <span class="border border-right"></span>
-        <span class="border border-bottom"></span>
-        <span class="border border-left"></span>
-        </a>
-      </div>
-
-      <div class="content">
-        <h3><a href="{% url 'movie_detail' pk=movie.pk %}">{{ movie.title }}</a></h3>
-        <div class="director">{{ movie.director }}</div>
-      </div>
-
-    </div>
-    {% endfor %}
-
-  </div>
-</section>
-<!-- MOVIE section ends -->
 
 
 <!-- footer section starts -->

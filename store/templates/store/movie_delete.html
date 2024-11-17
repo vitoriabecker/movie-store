@@ -6,7 +6,7 @@
 
   <p>Are you sure you want to delete "{{ movie.title }}" ?</p>
 
-  <form method="post" action="{% url 'movie_delete_confirm' movie.pk %}">
+  <form method="post" action="{% url 'movie_delete' movie.pk %}">
     {% csrf_token %}
     <button type="submit">Yes, delete</button>
     <a href="{% url 'movie_detail' movie.pk %}">Cancel</a>

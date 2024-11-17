@@ -7,7 +7,7 @@ class Movie(models.Model): # Objeto: define o modelo | models.Model diz que Post
   user = models.CharField(max_length=200, default='anything')                  
   director = models.CharField(max_length=200)
   title = models.CharField(max_length=200)
-  poster = models.ImageField(upload_to='media/posters', blank=True, null=True)
+  poster = models.ImageField(upload_to='media/posters', null=True)
   synopsis = models.TextField()
   year = models.TextField(max_length=4, blank=True, null=True)
   published_date = models.DateTimeField(default=timezone.now())
@@ -33,7 +33,6 @@ class Comment(models.Model):
   movie = models.ForeignKey(Movie, related_name='comments', on_delete=models.CASCADE)
   text = models.TextField()
   create_date = models.DateTimeField(default=timezone.now())
-  active = models.BooleanField(default=False)
 
   class Meta:
     ordering = ['create_date']
